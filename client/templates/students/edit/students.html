@@ -1,0 +1,21 @@
+<template name="students">
+    <div class="row">
+        <div class="col-md-12">
+            {{> studentsToolbar}}
+        </div>
+        <hr>
+    </div>
+    <div class="row">
+        <div id="students-container">
+            {{#if studentsReady }}
+                <!--<div class="list-group">-->
+                {{#each students}}
+                    {{> student}}
+                {{/each}}
+                <!--</div>-->
+            {{else}}
+                {{>loading }}
+            {{/if}}
+        </div>
+    </div>
+</template>

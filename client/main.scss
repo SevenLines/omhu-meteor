@@ -1,0 +1,27 @@
+@import "{}/node_modules/bootstrap/scss/bootstrap.scss";
+
+body {
+  padding: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+#students-container {
+  margin-top: 20px;
+}
+
+.btn {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.btn.female.btn-primary{
+  $color: #f14899;
+  background-color: $color;
+  border-color: $color;
+}

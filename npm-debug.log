@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'prune' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.40
+4 verbose node symlink /usr/bin/node
+5 verbose node_modules/foundation-sites unbuild
+6 info preuninstall foundation-sites@6.2.1
+7 info uninstall foundation-sites@6.2.1
+8 verbose true,/home/mk/WebstormProjects/omhu/node_modules,/home/mk/WebstormProjects/omhu/node_modules unbuild foundation-sites@6.2.1
+9 info postuninstall foundation-sites@6.2.1
+10 error Error: EACCES, unlink '/home/mk/WebstormProjects/omhu/node_modules/foundation-sites/node_modules/what-input/node_modules/gulp-header/node_modules/gulp-util/node_modules/.bin/dateformat'
+10 error  { [Error: EACCES, unlink '/home/mk/WebstormProjects/omhu/node_modules/foundation-sites/node_modules/what-input/node_modules/gulp-header/node_modules/gulp-util/node_modules/.bin/dateformat']
+10 error   errno: 3,
+10 error   code: 'EACCES',
+10 error   path: '/home/mk/WebstormProjects/omhu/node_modules/foundation-sites/node_modules/what-input/node_modules/gulp-header/node_modules/gulp-util/node_modules/.bin/dateformat' }
+11 error Please try running this command again as root/Administrator.
+12 error System Linux 4.2.0-35-generic
+13 error command "/usr/bin/node" "/usr/bin/npm" "prune"
+14 error cwd /home/mk/WebstormProjects/omhu
+15 error node -v v0.10.40
+16 error npm -v 1.4.28
+17 error path /home/mk/WebstormProjects/omhu/node_modules/foundation-sites/node_modules/what-input/node_modules/gulp-header/node_modules/gulp-util/node_modules/.bin/dateformat
+18 error code EACCES
+19 error errno 3
+20 error stack Error: EACCES, unlink '/home/mk/WebstormProjects/omhu/node_modules/foundation-sites/node_modules/what-input/node_modules/gulp-header/node_modules/gulp-util/node_modules/.bin/dateformat'
+21 verbose exit [ 3, true ]

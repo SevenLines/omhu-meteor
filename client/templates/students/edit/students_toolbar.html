@@ -1,0 +1,20 @@
+<template name="studentsToolbar">
+    <form action="" class="form-inline">
+        <div class="form-group">
+            <select class="form-control" name="year" id="year">
+                {{#each years}}
+                    <option value="{{year}}" {{selected}}>{{year}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            {{#if groupsReady }}
+                {{#each groups}}
+                    {{>group}}
+                {{/each}}
+            {{else}}
+                {{>loading }}
+            {{/if}}
+        </div>
+    </form>
+</template>

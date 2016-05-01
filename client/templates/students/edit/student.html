@@ -1,0 +1,29 @@
+<template name="student">
+    <!--<div class="list-group-item">-->
+    <div class="row">
+        {{#if canEdit}}
+            <div class="col-md-6">
+                <div class="input-group {{formClass}}">
+                    <input style="width: 50%" class="form-control student_secondname" type="text"
+                           value="{{second_name}}">
+                    <input style="width: 50%" class="form-control student_name" type="text" value="{{name}}">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn gender male {{maleClass}}"><i class="fa fa-mars"></i></button>
+                        <button type="button" class="btn gender female {{femaleClass}}"><i class="fa fa-venus"></i>
+                        </button>
+                        <button type="button" class="btn save {{btnClass}}"><i class="fa fa-floppy-o"></i></button>
+                        <button type="button" class="btn remove btn-danger-outline"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {{#each marks}}
+                    {{value}}
+                {{/each}}
+            </div>
+        {{else}}
+            <span>{{second_name}} {{name}}</span>
+        {{/if}}
+    </div>
+    <!--</div>-->
+</template>
