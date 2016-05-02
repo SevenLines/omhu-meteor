@@ -15,7 +15,6 @@ Template.header.events({
 
 Template.header.helpers({
   formClass() {
-    console.log(Meteor.user());
     return Meteor.user() ? "logout" : "login"
   }
 });

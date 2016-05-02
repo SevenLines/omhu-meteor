@@ -2,35 +2,37 @@
     <div class="page-header">
         <h1>Оценки</h1>
     </div>
-    <div class="col-md-12">
-        <form action="" class="form-inline">
-            <div class="form-group">
-                <select class="form-control" name="year" id="year">
-                    {{#each years}}
-                        <option value="{{year}}" {{selected}}>{{year}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="form-group">
-                {{#if groupsReady }}
-                    {{#each groups}}
-                        {{>marksGroup}}
-                    {{/each}}
-                {{else}}
-                    {{>loading }}
-                {{/if}}
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" class="form-inline">
+                <div class="form-group">
+                    <select class="form-control" name="year" id="year">
+                        {{#each years}}
+                            <option value="{{year}}" {{selected}}>{{year}}</option>
+                        {{/each}}
+                    </select>
+                    <select class="form-control" name="discipline" id="discipline">
+                        {{#each disciplines}}
+                            <option value="{{i._id}}" {{selected}}>{{i.title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    {{#if groupsAndDisciplinesReady }}
+                        {{#each groups}}
+                            {{>marksGroup}}
+                        {{/each}}
+                    {{else}}
+                        {{>loading }}
+                    {{/if}}
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="timeline-wrapper">
-        {{#constant}}
-
-
-
-
-
-
-
-        {{/constant}}
+    <div class="row">
+        <h1>{{marksCount}}</h1>
+        <div style="overflow: scroll;; overflow-y: hidden">
+            <div id="barChart"></div>
+        </div>
     </div>
 </template>

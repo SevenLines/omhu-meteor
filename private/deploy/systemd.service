@@ -1,0 +1,8 @@
+[Unit]
+Description=Omhu Meteor application
+
+[Service]
+Restart=on-failure
+RestartSec=15
+ExecStart=/bin/bash /home/mick/projects/omhu/launch.sh
+User=mick

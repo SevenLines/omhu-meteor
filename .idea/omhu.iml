@@ -5,7 +5,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.meteor/local" />
       <excludeFolder url="file://$MODULE_DIR$/client/lib/bootstrap/.meteor/local" />
       <excludeFolder url="file://$MODULE_DIR$/lib/bower/.meteor/local" />
+      <excludeFolder url="file://$MODULE_DIR$/meteor-up" />
     </content>
+    <content url="file://$MODULE_DIR$/../omhu-mup" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="omhu node_modules" level="project" />
