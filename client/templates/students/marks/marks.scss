@@ -1,3 +1,37 @@
+@mixin mark {
+  height: 28px;
+}
+
+@mixin markCell($color) {
+  &.awful {
+    background-color: #ffd8d7;
+  }
+  &.bad {
+    background-color: #ffede8;
+  }
+  &.empty {
+    background-color: lighten($color, 30);
+  }
+  &.normal {
+    background-color: lighten($color, 27);
+  }
+  &.good {
+    background-color: lighten($color, 23);
+  }
+  &.excellent {
+    background-color: lighten($color, 17);
+  }
+  &.awesome {
+    background-color: lighten($color, 8);
+  }
+  &.fantastic {
+    background-color: lighten($color, 3);
+  }
+  &.incredible {
+    background-color: lighten($color, 0);
+  }
+}
+
 #barChart div {
   font: 10px sans-serif;
   background-color: steelblue;
@@ -5,4 +39,48 @@
   padding: 3px;
   margin: 1px;
   color: white;
+}
+
+#students {
+  float: left;
+  overflow: hidden;
+  .student {
+    @include mark;
+    white-space: nowrap;
+  }
+}
+
+#marks {
+  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.mark-cell {
+  width: 40px;
+  @include mark;
+  text-align: center;
+  &.mmark {
+    color: transparent;
+    &.exam {
+      $color: #ffffff;
+      @include markCell($color)
+    }
+    &.prct {
+      $color: #b9ff1f;
+      @include markCell($color)
+    }
+    &.test {
+      $color: #f7005f;
+      @include markCell($color)
+    }
+    &.lect {
+      $color: #2ee0fa;
+      @include markCell($color)
+    }
+    &.exam {
+      $color: #ffe200;
+      @include markCell($color)
+    }
+  }
 }
