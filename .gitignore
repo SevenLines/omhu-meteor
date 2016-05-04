@@ -1,2 +1,5 @@
 /private/data_fixtures
+/.build
+/.idea
+/shipitfile.js
 node_modules/
