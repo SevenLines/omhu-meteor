@@ -1,7 +1,4 @@
 <template name="marks">
-    <div class="page-header">
-        <h1>Оценки</h1>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <form action="" class="form-inline">
@@ -31,8 +28,13 @@
     </div>
     <div class="row">
         <div style="padding-top: 2em">
-            <div id="students"></div>
-            <div id="marks"></div>
+            <div class="{{loadingVisible}}">
+                {{> loading}}
+            </div>
+            <div class="{{marksVisible}}">
+                <div id="students"></div>
+                <div id="marks"></div>
+            </div>
         </div>
     </div>
 </template>

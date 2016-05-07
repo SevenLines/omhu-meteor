@@ -1,35 +1,117 @@
-@mixin mark {
-  height: 28px;
-}
+$baseHeight: 28px;
+//
+//.god {
+//  &:after {
+//    content: ' ';
+//    opacity: 0;
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//    background: white;
+//    margin: 3px;
+//    border-radius: 3px;
+//    @include animation(godAnimation2 3s linear infinite);
+//  }
+//}
+//
+//.s-table > tbody {
+//  @for $i from 1 through 10 {
+//    > tr:nth-child(#{$i}) {
+//      .god {
+//        &:after {
+//          -webkit-animation-delay: #{$i/10}s;
+//          -moz-animation-delay: #{$i/10}s;
+//          -o-animation-delay: #{$i/10}s;
+//          animation-delay: #{$i/10}s;
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//@include keyframes(godAnimation2) {
+//  0% {
+//    opacity: 0;
+//    width: 0;
+//  }
+//  50% {
+//    opacity: .4;
+//  }
+//  100% {
+//    opacity: 0;
+//    width: 100%;
+//  }
+//}
 
 @mixin markCell($color) {
-  &.awful {
-    background-color: #ffd8d7;
+  &.mmark {
+    cursor: pointer;
+
+    &.black-hole {
+      background-color: black;
+      z-index: 100;
+      box-shadow: 0 0 0 4px rgb(200, 0, 0) inset;
+      //      @include animation(black-hole-glow 2s infinite);
+    }
+    &.shining {
+      background-color: #ffe20a;
+      z-index: 100;
+      box-shadow: 0 0 0 4px rgb(255, 182, 44) inset;
+      //      @include animation(shinig-glow 4s infinite);
+    }
+    &.mercy {
+      //@include test_exam(lighten($quater, 20), true);
+      background-color: white;
+      //z-index: 100;
+      //box-shadow: 0 0 4px white inset;
+      //      @include animation(mercy-glow 6s infinite);
+    }
+
+    &.awful {
+      background-color: #ffd8d7;
+    }
+    &.bad {
+      background-color: #ffede8;
+    }
+    &.empty {
+      background-color: lighten($color, 30);
+    }
+    &.normal {
+      background-color: lighten($color, 27);
+    }
+    &.good {
+      box-shadow: inset 0 0 10px darken($color, 10);
+      background-color: lighten($color, 23);
+    }
+    &.excellent {
+      box-shadow: inset 0 0 10px darken($color, 10);
+      background-color: lighten($color, 17);
+    }
+    &.awesome {
+      box-shadow: inset 0 0 10px darken($color, 10);
+      background-color: lighten($color, 8);
+    }
+    &.fantastic {
+      box-shadow: inset 0 0 10px darken($color, 10);
+      background-color: lighten($color, 3);
+    }
+    &.incredible {
+      box-shadow: inset 0 0 10px darken($color, 10);
+      background-color: lighten($color, 0);
+    }
   }
-  &.bad {
-    background-color: #ffede8;
+}
+
+@mixin lessonCell($color) {
+  &.lesson {
+    background-color: lighten($color, 20);
   }
-  &.empty {
-    background-color: lighten($color, 30);
-  }
-  &.normal {
-    background-color: lighten($color, 27);
-  }
-  &.good {
-    background-color: lighten($color, 23);
-  }
-  &.excellent {
-    background-color: lighten($color, 17);
-  }
-  &.awesome {
-    background-color: lighten($color, 8);
-  }
-  &.fantastic {
-    background-color: lighten($color, 3);
-  }
-  &.incredible {
-    background-color: lighten($color, 0);
-  }
+}
+
+.hidden {
+  display: none;
 }
 
 #barChart div {
@@ -42,11 +124,37 @@
 }
 
 #students {
+  border-right: 1px solid;
+  border-left: 1px solid;
   float: left;
   overflow: hidden;
   .student {
-    @include mark;
+    padding: 0.15em 0.5em;
+    height: $baseHeight;
     white-space: nowrap;
+  }
+  tr {
+    border-bottom: 1px solid;
+  }
+
+  tr:first-child {
+    td {
+      border-top: 1px solid black;
+    }
+  }
+
+  tr .mark-cell {
+    width: 100%;
+    padding: 0;
+    .student-btn {
+      float: left;
+      background-color: transparent;
+      border: none;
+      border-right: 1px solid;
+      height: $baseHeight;
+      padding: 0.1rem 0.5rem;
+      //margin-right: 4px;
+    }
   }
 }
 
@@ -54,33 +162,54 @@
   overflow: scroll;
   overflow-x: auto;
   overflow-y: hidden;
+  //border: 1px solid;
+
+  tr:first-child {
+    td {
+      border-top: 1px solid black;
+    }
+  }
+
+  td {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+  }
 }
 
 .mark-cell {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
   width: 40px;
-  @include mark;
+  height: $baseHeight;
   text-align: center;
-  &.mmark {
-    color: transparent;
-    &.exam {
-      $color: #ffffff;
-      @include markCell($color)
-    }
-    &.prct {
-      $color: #b9ff1f;
-      @include markCell($color)
-    }
-    &.test {
-      $color: #f7005f;
-      @include markCell($color)
-    }
-    &.lect {
-      $color: #2ee0fa;
-      @include markCell($color)
-    }
-    &.exam {
-      $color: #ffe200;
-      @include markCell($color)
-    }
+  padding: 2px;
+
+  &.exam {
+    $color: #ffffff;
+    @include lessonCell($color);
+    @include markCell($color)
+  }
+  &.prct {
+    $color: #b9ff1f;
+    @include lessonCell($color);
+    @include markCell($color)
+  }
+  &.test {
+    $color: #f7005f;
+    @include lessonCell($color);
+    @include markCell($color)
+  }
+  &.lect {
+    $color: #2ee0fa;
+    @include lessonCell($color);
+    @include markCell($color)
+  }
+  &.exam {
+    $color: #9e73ff;
+    @include lessonCell($color);
+    @include markCell($color)
   }
 }
