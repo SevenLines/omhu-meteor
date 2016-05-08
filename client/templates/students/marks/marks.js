@@ -59,10 +59,10 @@ Template.marks.helpers({
 });
 
 Template.marks.events({
-  "change #year, change #discipline"(e) {
+  "change #year, change #discipline, change #group"(e) {
     let form = e.target.form;
     Router.go("marks", {
-      title: Router.current().params.title,
+      title: form.group.value,
       year: form.year.value,
       discipline: form.discipline.value
     })
@@ -157,8 +157,21 @@ Template.marks.onRendered(function () {
 
     // STUDENTS TABLE
     let studentSelection = tableStudents.selectAll("tr.student-row").data(students);
-    studentSelection.enter().append("tr").append("td").append("div");
-    studentSelection.attr({
+    let studentSelectionEnter = studentSelection.enter()
+      .append("tr")
+      .append("td")
+      .append("div");
+    studentSelectionEnter.append("span").attr("class", "second-name");
+    studentSelectionEnter.append("span").attr("class", "name");
+    studentSelectionEnter.append("span").attr("class", "n");
+    studentSelectionEnter.append("span").attr("class", "label label-default");
+
+    // .text(s => {
+    //   return showFunction.get()(s);
+    // });
+
+
+    let studentRow = studentSelection.attr({
       class(s) {
         return `student-row`;
       }
@@ -172,9 +185,19 @@ Template.marks.onRendered(function () {
         }
       }).style("background-color", function (s) {
       return studentPercentColor(s.percentSum);
-    }).text(s => {
-      return `${s.second_name} ${s.name}` // ${showFunction.get()(s)}
-    }).append("span").attr("class", "label label-default").text(s => {
+    });
+
+    studentRow.select("span.second-name").text(s => {
+      return s.second_name;
+    });
+    studentRow.select("span.name").text(s => {
+      return " " + s.name;
+    });
+    studentRow.select("span.n").text(s => {
+      let firstLetter = s.name && s.name.length ? s.name[0] : "";
+      return " " + firstLetter + ".";
+    });
+    studentRow.select("span.label").text(s => {
       return showFunction.get()(s);
     });
 
