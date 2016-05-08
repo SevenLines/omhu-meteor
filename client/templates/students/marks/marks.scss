@@ -1,4 +1,6 @@
-$baseHeight: 28px;
+$baseHeight: 32px;
+$baseWidth: 36px;
+$borderWidth: 2px;
 //
 //.god {
 //  &:after {
@@ -45,9 +47,10 @@ $baseHeight: 28px;
 //  }
 //}
 
-@mixin markCell($color) {
+@mixin markCell($color, $shadowColor) {
   &.mmark {
     cursor: pointer;
+    //border: 2px solid darken($shadowColor, 5);
 
     &.black-hole {
       background-color: black;
@@ -69,36 +72,58 @@ $baseHeight: 28px;
       //      @include animation(mercy-glow 6s infinite);
     }
 
+    span {
+      display: none;
+    }
+    &:hover {
+      span {
+        display: inline;
+      }
+    }
+
     &.awful {
-      background-color: #ffd8d7;
+      &:before {
+        content: '-1';
+      }
+    }
+
+    &.awful {
+      &:before {
+        content: 'н';
+      }
+      color: #ff454a;
+      background-color: #fff2f2;
     }
     &.bad {
       background-color: #ffede8;
     }
     &.empty {
-      background-color: lighten($color, 30);
+      background-color: lighten($color, 40);
+      span {
+        display: none;
+      }
     }
     &.normal {
       background-color: lighten($color, 27);
     }
     &.good {
-      box-shadow: inset 0 0 10px darken($color, 10);
+      box-shadow: inset 0 0 10px lighten($shadowColor, 15);
       background-color: lighten($color, 23);
     }
     &.excellent {
-      box-shadow: inset 0 0 10px darken($color, 10);
+      box-shadow: inset 0 0 10px lighten($shadowColor, 5);
       background-color: lighten($color, 17);
     }
     &.awesome {
-      box-shadow: inset 0 0 10px darken($color, 10);
+      box-shadow: inset 0 0 10px lighten($shadowColor, 3);
       background-color: lighten($color, 8);
     }
     &.fantastic {
-      box-shadow: inset 0 0 10px darken($color, 10);
+      box-shadow: inset 0 0 10px $shadowColor;
       background-color: lighten($color, 3);
     }
     &.incredible {
-      box-shadow: inset 0 0 10px darken($color, 10);
+      box-shadow: inset 0 0 10px $shadowColor;
       background-color: lighten($color, 0);
     }
   }
@@ -124,22 +149,29 @@ $baseHeight: 28px;
 }
 
 #students {
-  border-right: 1px solid;
-  border-left: 1px solid;
+  //border-right: 1px solid;
+  //border-left: 1px solid;
+  box-shadow: 1px 1px 6px silver;
   float: left;
   overflow: hidden;
   .student {
-    padding: 0.15em 0.5em;
+    padding: 2px 6px;
+    padding-right: 4px;
     height: $baseHeight;
     white-space: nowrap;
+    .label {
+      float: right;
+      border-radius: 8px;
+      padding: 5px;
+      margin-left: 4px;
+      background-color: white;
+      color: green;
+    }
   }
   tr {
-    border-bottom: 1px solid;
-  }
-
-  tr:first-child {
     td {
-      border-top: 1px solid black;
+      border-top: $borderWidth solid white;
+      border-right: $borderWidth solid white;
     }
   }
 
@@ -159,20 +191,20 @@ $baseHeight: 28px;
 }
 
 #marks {
+  padding-left: 2px;
   overflow: scroll;
   overflow-x: auto;
   overflow-y: hidden;
-  //border: 1px solid;
 
   tr:first-child {
     td {
-      border-top: 1px solid black;
+      border-top: $borderWidth solid white;
     }
   }
 
   td {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
+    border-top: $borderWidth solid white;
+    border-right: $borderWidth solid white;
   }
 }
 
@@ -182,34 +214,55 @@ $baseHeight: 28px;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-  width: 40px;
+  width: $baseWidth;
   height: $baseHeight;
   text-align: center;
   padding: 2px;
 
+  border-radius: 3px;
+  border: 1px solid #a3a3a3;
+
+  &.empty {
+    border-color: #e3e3e3;
+  }
+
   &.exam {
     $color: #ffffff;
+    $shadowColor: $color;
     @include lessonCell($color);
-    @include markCell($color)
+    @include markCell($color, $shadowColor)
   }
   &.prct {
     $color: #b9ff1f;
+    $shadowColor: #87d014;
     @include lessonCell($color);
-    @include markCell($color)
+    @include markCell($color, $shadowColor)
+  }
+  &.lab {
+    $color: #ffee00;
+    $shadowColor: #ffcc00;
+    @include lessonCell($color);
+    @include markCell($color, $shadowColor)
   }
   &.test {
-    $color: #f7005f;
+    $color: #FF006F;
+    $shadowColor: #d20079;
     @include lessonCell($color);
-    @include markCell($color)
+    @include markCell($color, $shadowColor)
   }
   &.lect {
     $color: #2ee0fa;
+    $shadowColor: #2aa4dd;
     @include lessonCell($color);
-    @include markCell($color)
+    @include markCell($color, $shadowColor)
   }
   &.exam {
-    $color: #9e73ff;
+    $color: #ff5900;
+    $shadowColor: #ffd300;
     @include lessonCell($color);
-    @include markCell($color)
+    @include markCell($color, $shadowColor)
   }
+
+  //box-shadow: inset 0 0 10px #840B00;
+  //background-color: rgb(255, 0, 111);
 }

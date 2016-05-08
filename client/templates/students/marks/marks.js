@@ -12,15 +12,20 @@ let lessonClass = d3.scale.ordinal().domain([
 
 let studentPercentColor = d3.scale.linear()
   .domain([0, 0.3, 0.99999, 1, 1000])
-  .range(['red', 'white', 'green', '#ffe20a', '#ffe20a']);
+  .range(['#ff7d85', 'white', '#b9ff1f', '#ffe20a', '#ffe20a']);
 
 function sortStudentsByName(a, b) {
   return d3.ascending(a.second_name, b.second_name);
 }
+sortStudentsByName.name = "byName";
 
 function sortStudentsByResult(a, b) {
   return d3.descending(a.sum, b.sum);
 }
+sortStudentsByResult.name = "byResult";
+sortFunctions = {};
+sortFunctions[sortStudentsByName.name] = sortStudentsByName;
+sortFunctions[sortStudentsByResult.name] = sortStudentsByResult;
 
 function badStudentsFilter(student) {
   return student.sum < 0;
@@ -34,8 +39,8 @@ function showPercents(student) {
   return Math.round(student.percentSum * 100, 0) + "%";
 }
 
-let sortFunction = ReactiveVar(sortStudentsByName);
-let showBadStudents = ReactiveVar(true);
+let sortFunction = ReactiveVar(sortFunctions[localStorage['sortMarksFunction'] || sortStudentsByName.name]);
+let showBadStudents = ReactiveVar(false);
 let showFunction = ReactiveVar(showPoints);
 
 Template.marks.helpers({
@@ -71,7 +76,9 @@ Template.marks.onRendered(function () {
   // сортировка
   controlRow.append("button").attr("class", "student-btn sort").on("click", function () {
     let currentSortFunction = sortFunction.get();
-    sortFunction.set(currentSortFunction == sortStudentsByName ? sortStudentsByResult : sortStudentsByName);
+    currentSortFunction = currentSortFunction == sortStudentsByName ? sortStudentsByResult : sortStudentsByName;
+    localStorage['sortMarksFunction'] = currentSortFunction.name;
+    sortFunction.set(currentSortFunction);
   }).append("i").attr("class", "fa fa-sort");
 
   // показывать проценты вместо баллов
@@ -82,6 +89,7 @@ Template.marks.onRendered(function () {
 
   // спрятать плохих студентов
   controlRow.append("button").attr("class", "student-btn stared").on("click", function () {
+    localStorage['showBadStudents'] = !showBadStudents.get();
     showBadStudents.set(!showBadStudents.get());
   }).append("i").attr("class", "fa fa-eye");
 
@@ -118,21 +126,21 @@ Template.marks.onRendered(function () {
       return new Date(l.date).getUTCDate();
     });
     lessonsSelection.exit().remove();
-    //
-    // // MARK TABLE
+
+    // MARK TABLE
     let marksSelection = tableMarks.selectAll("tr.student").data(students);
     marksSelection.enter().append("tr");
     marksSelection.attr({
       class: "student"
-    }).sort(sortFunction.get());
+    });
     marksSelection.exit().remove();
 
     let studentsMarksSelection = marksSelection.selectAll("td")
       .data((s, i) => {
         return s.marks
       });
-    //
-    studentsMarksSelection.enter().append("td").append("div");
+
+    studentsMarksSelection.enter().append("td").append("div").append("span");
     studentsMarksSelection.selectAll("div").data(d => {
       return [d]
     }).attr({
@@ -142,6 +150,8 @@ Template.marks.onRendered(function () {
       dataDate(m) {
         return new Date(m.lesson.date).getUTCDate();
       }
+    }).select("span").text(m => {
+      return m.value
     });
     studentsMarksSelection.exit().remove();
 
@@ -152,8 +162,7 @@ Template.marks.onRendered(function () {
       class(s) {
         return `student-row`;
       }
-    }).sort(sortFunction.get())
-      .selectAll("tr td div")
+    }).selectAll("tr > td > div")
       .data(d => {
         return [d]
       })
@@ -164,13 +173,17 @@ Template.marks.onRendered(function () {
       }).style("background-color", function (s) {
       return studentPercentColor(s.percentSum);
     }).text(s => {
-      return `${s.second_name} ${s.name} ${showFunction.get()(s)}`
+      return `${s.second_name} ${s.name}` // ${showFunction.get()(s)}
+    }).append("span").attr("class", "label label-default").text(s => {
+      return showFunction.get()(s);
     });
 
-    if (showBadStudents.get()) {
+    if (!showBadStudents.get()) {
       marksSelection.filter(badStudentsFilter).classed("hidden", true);
       studentSelection.filter(badStudentsFilter).classed("hidden", true);
     }
+    studentSelection.sort(sortFunction.get());
+    marksSelection.sort(sortFunction.get());
 
     studentSelection.exit().remove();
   })
