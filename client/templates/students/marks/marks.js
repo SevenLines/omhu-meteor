@@ -96,6 +96,16 @@ Template.marks.onRendered(function () {
   let tableMarks = d3.select("#marks").append('table');
   let lessonsRow = tableMarks.append("tr");
 
+  var drag = d3.behavior.drag().on("drag", function () {
+    this.scrollLeft -= d3.event.dx;
+  }).on('dragstart', function() {
+    d3.select(this).classed("dragged", true);
+  }).on('dragend', function () {
+    d3.select(this).classed("dragged", false);
+  });
+  d3.select("#marks").call(drag);
+
+
   Tracker.autorun(function () {
     var marks = Router.current().marksInfo();
     var lessons = marks.lessons;
@@ -184,8 +194,8 @@ Template.marks.onRendered(function () {
           return "student"
         }
       }).style("background-color", function (s) {
-      return studentPercentColor(s.percentSum);
-    });
+        return studentPercentColor(s.percentSum);
+      });
 
     studentRow.select("span.second-name").text(s => {
       return s.second_name;
