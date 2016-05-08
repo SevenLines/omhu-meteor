@@ -3,51 +3,53 @@
 $baseHeight: 32px;
 $baseWidth: 36px;
 $borderWidth: 2px;
+
+.god {
+
+  td > div {
+    position: relative;
+    &:after {
+      content: ' ';
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      margin: 3px;
+      border-radius: 3px;
+      @include animation(godAnimation 3s linear infinite);
+    }
+  }
+}
+
 //
-//.god {
-//  &:after {
-//    content: ' ';
-//    opacity: 0;
-//    position: absolute;
-//    top: 0;
-//    left: 0;
-//    right: 0;
-//    bottom: 0;
-//    background: white;
-//    margin: 3px;
-//    border-radius: 3px;
-//    @include animation(godAnimation2 3s linear infinite);
-//  }
-//}
-//
-//.s-table > tbody {
-//  @for $i from 1 through 10 {
-//    > tr:nth-child(#{$i}) {
-//      .god {
-//        &:after {
-//          -webkit-animation-delay: #{$i/10}s;
-//          -moz-animation-delay: #{$i/10}s;
-//          -o-animation-delay: #{$i/10}s;
-//          animation-delay: #{$i/10}s;
-//        }
-//      }
-//    }
-//  }
-//}
-//
-//@include keyframes(godAnimation2) {
-//  0% {
-//    opacity: 0;
-//    width: 0;
-//  }
-//  50% {
-//    opacity: .4;
-//  }
-//  100% {
-//    opacity: 0;
-//    width: 100%;
-//  }
-//}
+#students {
+
+}
+
+@keyframes godAnimation {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  50% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 0;
+    width: 100%;
+  }
+}
+
+@mixin markSpan($value) {
+  span {
+    &:before {
+      content: $value;
+    }
+  }
+}
 
 @mixin markCell($color, $shadowColor) {
   &.mmark {
@@ -58,12 +60,15 @@ $borderWidth: 2px;
       background-color: black;
       z-index: 100;
       box-shadow: 0 0 0 4px rgb(200, 0, 0) inset;
+      @include markSpan("\25CF");
+      color: rgb(200, 0, 0);
       //      @include animation(black-hole-glow 2s infinite);
     }
     &.shining {
       background-color: #ffe20a;
       z-index: 100;
       box-shadow: 0 0 0 4px rgb(255, 182, 44) inset;
+      @include markSpan('\221E');
       //      @include animation(shinig-glow 4s infinite);
     }
     &.mercy {
@@ -84,49 +89,54 @@ $borderWidth: 2px;
     }
 
     &.awful {
-      &:before {
-        content: '-1';
-      }
-    }
-
-    &.awful {
-      &:before {
-        content: 'н';
-      }
       color: #ff454a;
       background-color: #fff2f2;
+      span {
+        display: inline;
+      }
+      @include markSpan('н');
     }
+
     &.bad {
       background-color: #ffede8;
+      @include markSpan('-1');
     }
+
     &.empty {
       background-color: lighten($color, 40);
       span {
-        display: none;
+        display: none !important;
       }
     }
+
     &.normal {
       background-color: lighten($color, 27);
+      @include markSpan('1');
     }
     &.good {
       box-shadow: inset 0 0 10px lighten($shadowColor, 15);
       background-color: lighten($color, 23);
+      @include markSpan('2');
     }
     &.excellent {
       box-shadow: inset 0 0 10px lighten($shadowColor, 5);
       background-color: lighten($color, 17);
+      @include markSpan('3');
     }
     &.awesome {
       box-shadow: inset 0 0 10px lighten($shadowColor, 3);
       background-color: lighten($color, 8);
+      @include markSpan('4');
     }
     &.fantastic {
       box-shadow: inset 0 0 10px $shadowColor;
       background-color: lighten($color, 3);
+      @include markSpan('5');
     }
     &.incredible {
       box-shadow: inset 0 0 10px $shadowColor;
       background-color: lighten($color, 0);
+      @include markSpan('6');
     }
   }
 }
@@ -156,6 +166,32 @@ $borderWidth: 2px;
   box-shadow: 1px 1px 6px silver;
   float: left;
   overflow: hidden;
+
+  table {
+    @for $i from 1 through 10 {
+      > tr:nth-child(#{$i}) {
+        .god {
+          td > div {
+            &:after {
+              -webkit-animation-delay: #{$i/10}s;
+              -moz-animation-delay: #{$i/10}s;
+              -o-animation-delay: #{$i/10}s;
+              animation-delay: #{$i/10}s;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .student-row {
+    border-left: 0 solid white;
+    @include transition(0.1s);
+  }
+  .student-row.hover {
+    border-left: 16px solid white;
+  }
+
   .student {
     padding: 2px 6px;
     padding-right: 4px;
@@ -168,14 +204,14 @@ $borderWidth: 2px;
       background-color: white;
       color: green;
     }
-    span.n{
+    span.n {
       display: none;
     }
     @media (max-width: $width-medium) {
       span.name {
         display: none;
       }
-      span.n{
+      span.n {
         display: inline;
       }
     }
@@ -212,12 +248,24 @@ $borderWidth: 2px;
     cursor: move;
     .mark-cell {
       cursor: move;
+
     }
   }
 
   tr:first-child {
     td {
       border-top: $borderWidth solid white;
+    }
+  }
+
+  tr:hover {
+    .mark-cell {
+      &.awful {
+        @include markSpan('-2');
+      }
+      span {
+        display: inline;
+      }
     }
   }
 
@@ -237,8 +285,6 @@ $borderWidth: 2px;
   height: $baseHeight;
   text-align: center;
   padding: 2px;
-
-
 
   border-radius: 3px;
   border: 1px solid #a3a3a3;

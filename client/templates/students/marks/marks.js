@@ -142,6 +142,12 @@ Template.marks.onRendered(function () {
     marksSelection.enter().append("tr");
     marksSelection.attr({
       class: "student"
+    }).on("mouseover", function(s, i) {
+      d3.select(this).classed("hover", true);
+      d3.select(`#student${i}`).classed("hover", true);
+    }).on("mouseout", function (s, i) {
+      d3.select(this).classed("hover", false);
+      d3.select(`#student${i}`).classed("hover", false);
     });
     marksSelection.exit().remove();
 
@@ -160,8 +166,6 @@ Template.marks.onRendered(function () {
       dataDate(m) {
         return new Date(m.lesson.date).getUTCDate();
       }
-    }).select("span").text(m => {
-      return m.value
     });
     studentsMarksSelection.exit().remove();
 
@@ -176,14 +180,13 @@ Template.marks.onRendered(function () {
     studentSelectionEnter.append("span").attr("class", "n");
     studentSelectionEnter.append("span").attr("class", "label label-default");
 
-    // .text(s => {
-    //   return showFunction.get()(s);
-    // });
-
-
     let studentRow = studentSelection.attr({
       class(s) {
-        return `student-row`;
+        let god = s.percentSum > 1 ? 'god' : '';
+        return `student-row ${god}`;
+      },
+      id(s, i) {
+        return `student${i}`;
       }
     }).selectAll("tr > td > div")
       .data(d => {
